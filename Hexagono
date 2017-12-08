@@ -1,0 +1,38 @@
+class Hexagono implements Figura{
+  int l;
+  int x,y;
+  float angle = TWO_PI/6;
+  
+  Hexagono(int l_,int x_, int y_){
+    l = l_;
+    x = x_;
+    y = y_;
+  }
+  
+  float perimetro(){
+    return l*6;
+  }
+  float area(){
+    return perimetro()*apotema()/2;
+  }
+  
+  float apotema(){
+    float d = angle/2;
+    float f = tan (d);
+    float m = 2*f;
+    return l/m;
+    }
+  
+  void display(){
+    pushMatrix();
+        beginShape();
+          for(float a = 0; a < TWO_PI; a += angle){
+            float sx = x + cos(a) * apotema();
+            float sy = y + sin(a) * apotema();
+            vertex(sx,sy);
+          }
+        endShape(CLOSE);   
+    popMatrix();
+    
+  }
+}
