@@ -1,0 +1,61 @@
+import gab.opencv.*;
+import processing.video.*;
+import java.awt.*;
+
+ArrayList<Hexagono> Hexagonos;
+Figura Hxgno;
+Capture video;
+int numPixelsWide, numPixelsHigh;
+int blockSize = 10;
+
+color movColors[];
+
+void setup() {
+  Hexagonos = new ArrayList<Hexagono>();
+  //Hexagonos.add(Hxgno);
+  
+  size(640, 360);
+  noStroke();
+  video = new Capture(this, 640,480);
+  numPixelsWide = width / blockSize;
+  numPixelsHigh = height / blockSize;
+  println(numPixelsWide);
+  movColors = new color[numPixelsWide * numPixelsHigh];
+  video.start();
+  
+  Hxgno = new Hexagono(40,50,50);
+}
+
+// Display values from movie
+void draw() {
+  if (video.available() == true) {
+    video.read();
+    video.loadPixels();
+    int count = 0;
+    for (int j = 0; j < numPixelsHigh; j++) {
+      for (int i = 0; i < numPixelsWide; i++) {
+        movColors[count] = video.get(i*blockSize, j*blockSize);
+        count++;
+      }
+    }
+  }
+
+  background(255);
+  for (int j = 0; j < numPixelsHigh; j++) {
+    for (int i = 0; i < numPixelsWide; i++) {
+      fill(movColors[j*numPixelsWide + i]);
+       Hxgno =new Hexagono(blockSize,i*blockSize, j*blockSize);
+       Hxgno.display();
+      
+    }
+  }
+
+}
+
+interface Figura {
+  //---------------------- D. Interface
+  float perimetro();
+  float area();
+  float apotema();
+  void display();
+}
