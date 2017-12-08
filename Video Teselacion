@@ -2,16 +2,16 @@ import gab.opencv.*;
 import processing.video.*;
 import java.awt.*;
 
-ArrayList<Hexagono> Hexagonos;
+//ArrayList<Hexagono> Hexagonos;
 Figura Hxgno;
 Capture video;
 int numPixelsWide, numPixelsHigh;
-int blockSize = 10;
+int blockSize = 20;
 
 color movColors[];
 
 void setup() {
-  Hexagonos = new ArrayList<Hexagono>();
+  //Hexagonos = new ArrayList<Hexagono>();
   //Hexagonos.add(Hxgno);
   
   size(640, 360);
@@ -23,7 +23,7 @@ void setup() {
   movColors = new color[numPixelsWide * numPixelsHigh];
   video.start();
   
-  Hxgno = new Hexagono(40,50,50);
+  Hxgno = new Hexagono(blockSize,numPixelsWide,numPixelsHigh);
 }
 
 // Display values from movie
@@ -36,17 +36,10 @@ void draw() {
       for (int i = 0; i < numPixelsWide; i++) {
         movColors[count] = video.get(i*blockSize, j*blockSize);
         count++;
-      }
-    }
-  }
-
-  background(255);
-  for (int j = 0; j < numPixelsHigh; j++) {
-    for (int i = 0; i < numPixelsWide; i++) {
       fill(movColors[j*numPixelsWide + i]);
-       Hxgno =new Hexagono(blockSize,i*blockSize, j*blockSize);
+       Hxgno =new Hexagono(blockSize,i*20, j*20);
        Hxgno.display();
-      
+      }
     }
   }
 
